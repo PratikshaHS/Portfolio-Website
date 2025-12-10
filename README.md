@@ -3,6 +3,10 @@
 [![GitHub](https://img.shields.io/badge/View-GitHub-181717?style=for-the-badge&logo=github)](https://github.com/PratikshaHS/Portfolio-Website)
 [![Website](https://img.shields.io/badge/Visit-Website-2563eb?style=for-the-badge)](https://pratikshahs.github.io/Portfolio-Website)
 
+
+##live Demo Click below
+
+- https://my-portfolio-website-p.netlify.app/
 ## Features
 
 - **Modern & Responsive Design** - Looks great on all devices
@@ -74,3 +78,4 @@ This portfolio is deployed using GitHub Pages. To deploy your own version:
 ---
 
 ⭐ Feel free to star this repository if you find it useful!
+
