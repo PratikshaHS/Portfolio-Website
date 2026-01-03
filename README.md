@@ -43,7 +43,7 @@ portfolio-website/
    ```
 
 2. **Open in browser**
-   - Simply open `index.html` in your preferred browser
+   - Simply open `index.html` in your preferred browser or click on the live link above
 
 ## Customization
 
@@ -73,10 +73,11 @@ This portfolio is deployed using GitHub Pages. To deploy your own version:
 - **Email**: pratikshahsamant@gmail.com
 - **LinkedIn**: [Pratiksha Samant](https://www.linkedin.com/in/pratikshasamant/)
 - **GitHub**: [@PratikshaHS](https://github.com/PratikshaHS)
-- **Phone**: +91 7760917047
 
----
+
+
 
 ⭐ Feel free to star this repository if you find it useful!
+
 
 
