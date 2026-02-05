@@ -5,6 +5,44 @@ const navLinks = document.querySelectorAll('.nav-link');
 const backToTop = document.querySelector('.back-to-top');
 const form = document.getElementById('whatsappForm');
 const inputs = document.querySelectorAll('input, textarea');
+const header = document.querySelector('.header');
+const loader = document.querySelector('.loader');
+
+// Loading Screen
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        if (loader) {
+            loader.classList.add('hidden');
+        }
+        document.body.classList.add('loaded');
+        initializeSimpleAnimations();
+    }, 1500);
+});
+
+// Initialize simple animations
+const initializeSimpleAnimations = () => {
+    // Add animation classes to elements
+    const animatedElements = document.querySelectorAll('.section-header, .skill-category, .project-card, .certification-card, .experience-item');
+    animatedElements.forEach((element, index) => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(30px)';
+        element.style.transition = 'all 0.6s ease-out';
+    });
+    
+    // Trigger initial animations after a delay
+    setTimeout(() => {
+        animatedElements.forEach((element, index) => {
+            setTimeout(() => {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+    }, 500);
+    
+    // Trigger simple animations
+    triggerSimpleAnimations();
+    addSimpleEffects();
+};
 
 // Mobile Menu Toggle
 menuToggle.addEventListener('click', () => {
@@ -113,87 +151,118 @@ inputs.forEach(input => {
     }
 });
 
-// Scroll Reveal Animation
-const animateOnScroll = () => {
-    const elements = document.querySelectorAll('.animate-on-scroll');
+// Simple Scroll Animations
+const triggerSimpleAnimations = () => {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
     
-    elements.forEach(element => {
-        const elementPosition = element.getBoundingClientRect().top;
-        const screenPosition = window.innerHeight / 1.3;
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+    // Observe all elements for simple animations
+    const animatedElements = document.querySelectorAll('.skill-category, .project-card, .certification-card, .experience-item, .section-header');
+    animatedElements.forEach(element => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(30px)';
+        element.style.transition = 'all 0.6s ease-out';
+        observer.observe(element);
+    });
+};
+
+// Header scroll effect
+window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    
+    if (scrolled > 100) {
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
+    }
+    
+    // Back to top button
+    if (scrolled > 300) {
+        backToTop.classList.add('active');
+    } else {
+        backToTop.classList.remove('active');
+    }
+});
+
+// Enhanced Navigation Active State
+const updateActiveNavigation = () => {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    let current = '';
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        const sectionHeight = section.clientHeight;
         
-        if (elementPosition < screenPosition) {
-            element.classList.add('visible');
+        if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
+            current = section.getAttribute('id');
+        }
+    });
+    
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
         }
     });
 };
 
-// Add animation classes to sections
-document.addEventListener('DOMContentLoaded', () => {
-    const sections = document.querySelectorAll('section');
-    sections.forEach(section => {
-        section.classList.add('animate-on-scroll');
-    });
-    
-    // Initial check for elements in viewport
-    animateOnScroll();
-    
-    // Add active class to current section in navigation
-    const navLinks = document.querySelectorAll('.nav-link');
-    
-    window.addEventListener('scroll', () => {
-        let current = '';
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            
-            if (pageYOffset >= sectionTop - 200) {
-                current = section.getAttribute('id');
-            }
+window.addEventListener('scroll', updateActiveNavigation);
+
+// Simple Interactive Effects
+const addSimpleEffects = () => {
+    // Button hover effects
+    const buttons = document.querySelectorAll('.btn');
+    buttons.forEach(button => {
+        button.addEventListener('mouseenter', () => {
+            button.style.transform = 'translateY(-3px) scale(1.05)';
         });
         
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${current}`) {
-                link.classList.add('active');
-            }
+        button.addEventListener('mouseleave', () => {
+            button.style.transform = 'translateY(0) scale(1)';
         });
     });
-});
-
-// Listen for scroll events to trigger animations
-window.addEventListener('scroll', animateOnScroll);
-
-// Add loading animation
-window.addEventListener('load', () => {
-    document.body.classList.add('loaded');
-});
-
-// Add hover effect to project cards
-const projectCards = document.querySelectorAll('.project-card');
-projectCards.forEach(card => {
-    const link = card.querySelector('a');
     
-    card.addEventListener('mouseenter', () => {
-        if (link) {
-            link.style.transform = 'translateY(0)';
-            link.style.opacity = '1';
-        }
+    // Card hover effects
+    const cards = document.querySelectorAll('.project-card, .certification-card, .skill-category');
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-5px)';
+            card.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.1)';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0)';
+            card.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.05)';
+        });
     });
     
-    card.addEventListener('mouseleave', () => {
-        if (link) {
-            link.style.transform = 'translateY(20px)';
-            link.style.opacity = '0';
-        }
+    // Social links hover
+    const socialLinks = document.querySelectorAll('.social-links a');
+    socialLinks.forEach(link => {
+        link.addEventListener('mouseenter', () => {
+            link.style.transform = 'translateY(-5px) rotate(360deg)';
+        });
+        
+        link.addEventListener('mouseleave', () => {
+            link.style.transform = 'translateY(0) rotate(0deg)';
+        });
     });
-});
+};
 
-// Add animation to skill items
-const skillItems = document.querySelectorAll('.skill-item');
-skillItems.forEach((item, index) => {
-    item.style.transitionDelay = `${index * 0.1}s`;
-});
+// Initialize interactive effects
+document.addEventListener('DOMContentLoaded', addSimpleEffects);
 
 // Handle form input validation
 const validateEmail = (email) => {
@@ -212,18 +281,94 @@ if (emailInput) {
     });
 }
 
-// Add animation to hero content
-const heroContent = document.querySelector('.hero-content');
-if (heroContent) {
-    heroContent.style.opacity = '0';
-    heroContent.style.transform = 'translateY(20px)';
-    heroContent.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+// Creative Background Effects
+const createCreativeBackground = () => {
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
     
-    setTimeout(() => {
-        heroContent.style.opacity = '1';
-        heroContent.style.transform = 'translateY(0)';
-    }, 300);
-}
+    // Create animated gradient orbs
+    for (let i = 0; i < 8; i++) {
+        const orb = document.createElement('div');
+        const size = Math.random() * 100 + 50;
+        const duration = Math.random() * 15 + 10;
+        const delay = Math.random() * 5;
+        
+        orb.style.cssText = `
+            position: absolute;
+            width: ${size}px;
+            height: ${size}px;
+            border-radius: 50%;
+            background: radial-gradient(circle, 
+                rgba(102, 126, 234, 0.6), 
+                rgba(240, 147, 251, 0.4), 
+                rgba(245, 87, 108, 0.2));
+            left: ${Math.random() * 100}%;
+            top: ${Math.random() * 100}%;
+            animation: creativeFloat ${duration}s ease-in-out infinite;
+            animation-delay: ${delay}s;
+            filter: blur(2px);
+            pointer-events: none;
+            z-index: 0;
+        `;
+        
+        hero.appendChild(orb);
+    }
+    
+    // Add interactive mouse trail effect
+    let mouseTrail = [];
+    hero.addEventListener('mousemove', (e) => {
+        const rect = hero.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const trail = document.createElement('div');
+        trail.style.cssText = `
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: radial-gradient(circle, 
+                rgba(255, 255, 255, 0.8), 
+                transparent);
+            left: ${x}px;
+            top: ${y}px;
+            transform: translate(-50%, -50%);
+            animation: trailFade 1s ease-out forwards;
+            pointer-events: none;
+            z-index: 2;
+        `;
+        
+        hero.appendChild(trail);
+        mouseTrail.push(trail);
+        
+        // Clean up old trail elements
+        if (mouseTrail.length > 10) {
+            const oldTrail = mouseTrail.shift();
+            oldTrail.remove();
+        }
+        
+        setTimeout(() => trail.remove(), 1000);
+    });
+    
+    // Add trail fade animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes trailFade {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+n            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(2);
+            }
+n        }
+    `;
+    document.head.appendChild(style);
+};
+
+// Initialize creative background
+setTimeout(createCreativeBackground, 1000);
 
 // Handle image loading
 const images = document.querySelectorAll('img');
