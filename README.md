@@ -67,7 +67,7 @@ This portfolio is deployed using GitHub Pages. To deploy your own version:
 ## Contact
 
 - **Email**: pratikshahsamant@gmail.com
-- **LinkedIn**: [Pratiksha Samant](https://www.linkedin.com/in/pratikshasamant/)
+- **LinkedIn**: https://www.linkedin.com/in/pratikshasamant/
 - **GitHub**: [@PratikshaHS](https://github.com/PratikshaHS)
 - **Phone**: +91 7760917047
 
